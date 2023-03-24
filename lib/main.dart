@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:search_bar_example/presentation/view/home_view.dart';
-import 'package:sizer/sizer.dart';
+import 'package:search_bar_example/src/config/app_router.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+final router = AppRouter();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,19 +14,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Sizer(builder: (context, orientation, deviceType) {
-      return ScreenUtilInit(
-        designSize: Size(430, 932),
-        minTextAdapt: true,
-        builder: (context, _) {
-          return MaterialApp(
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            home: HomeView(),
-          );
-        },
-      );
-    });
+    return ScreenUtilInit(
+      minTextAdapt: true,
+      builder: (context, _) {
+        return MaterialApp.router(
+          routerDelegate: router.delegate(),
+          routeInformationParser: router.defaultRouteParser(),
+          debugShowCheckedModeBanner: false,
+        );
+      },
+    );
   }
 }
