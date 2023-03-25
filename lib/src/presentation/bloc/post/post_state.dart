@@ -1,10 +1,5 @@
-import '../../../data/model/post_model.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
-abstract class PostState {}
-
-class InitialState extends PostState {}
-
-class UpdatePostList extends PostState {
-  List<PostModel> _posts = [];
-  UpdatePostList(this._posts);
-}
+@immutable
+abstract class PostState extends Equatable {}
