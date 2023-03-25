@@ -21,10 +21,11 @@ class _SearchViewState extends State<SearchView> {
           isReadOnly: false,
         ),
       ),
-      body: SafeArea(
-        child: Container(
-          child: null,
-        ),
+      body: Container(
+        width: 1000.w,
+        height: 1000.h,
+        child: null,
+        color: Color(0xffe3e3e3),
       ),
     );
   }

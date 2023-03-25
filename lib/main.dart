@@ -26,3 +26,14 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// ScreenUtilInit(
+//       minTextAdapt: true,
+//       builder: (context, _) {
+//         return MaterialApp.router(
+//           routerDelegate: router.delegate(),
+//           routeInformationParser: router.defaultRouteParser(),
+//           debugShowCheckedModeBanner: false,
+//         );
+//       },
+//     );
