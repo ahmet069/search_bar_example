@@ -1,7 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:search_bar_example/src/core/components/post_widget/post_widget.dart';
+import 'package:search_bar_example/src/data/model/user_model.dart';
 
 import '../../core/components/text_form_field/custom_text_form_field.dart';
+import '../../data/model/post_model.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -11,6 +15,27 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
+  List<UserModel> users = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fetchUsers();
+  }
+
+  void _fetchUsers() async {
+    try {
+      final response =
+          await Dio().get("https://jsonplaceholder.typicode.com/users");
+      final usersJson = response.data as List<dynamic>;
+      setState(() {
+        users = usersJson.map((json) => UserModel.fromJson(json)).toList();
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,42 +49,20 @@ class _SearchViewState extends State<SearchView> {
       body: Container(
         width: 1000.w,
         height: 1000.h,
-        child: null,
         color: Color(0xffe3e3e3),
+        child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: users.length,
+            itemBuilder: (context, index) {
+              final user = users[index];
+              return PostWidget(
+                id: int.parse(user.id.toString()),
+                name: user.name.toString(),
+                userName: user.username.toString(),
+              );
+            }),
       ),
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:search_bar_example/src/core/components/text_form_field/custom_text_form_field.dart';
-
-// class SearchView extends StatefulWidget {
-//   const SearchView({super.key});
-
-//   @override
-//   State<SearchView> createState() => _SearchViewState();
-// }
-
-// class _SearchViewState extends State<SearchView> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: CustomTextFromField(
-//           isReadOnly: false,
-//         ),
-//         bottom: PreferredSize(
-//           child: Container(),
-//           preferredSize: Size(double.infinity, 30),
-//         ),
-//       ),
-//       body: SafeArea(
-//         child: Container(
-//           child: null,
-//         ),
-//       ),
-//     );
-//   }
-// }
-

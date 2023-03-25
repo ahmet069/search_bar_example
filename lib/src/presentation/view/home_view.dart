@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:search_bar_example/main.dart';
@@ -6,6 +7,7 @@ import 'package:search_bar_example/src/config/app_router.dart';
 import 'package:search_bar_example/src/core/components/post_widget/post_widget.dart';
 import 'package:search_bar_example/src/core/components/text_form_field/custom_text_form_field.dart';
 import 'package:search_bar_example/src/data/model/post_model.dart';
+import 'package:search_bar_example/src/data/model/user_model.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -17,25 +19,22 @@ class HomeView extends StatefulWidget {
 final dio = Dio();
 
 class _HomeViewState extends State<HomeView> {
-  List<PostModel> _posts = [];
+  List<UserModel> users = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchPosts();
+    _fetchUsers();
   }
 
-  void _fetchPosts() async {
+  void _fetchUsers() async {
     try {
       final response =
-          await Dio().get('https://jsonplaceholder.typicode.com/posts');
-      final postsJson =
-          response.data as List<dynamic>; //? list<dynamic> important
-      setState(
-        () {
-          _posts = postsJson.map((json) => PostModel.fromJson(json)).toList();
-        },
-      );
+          await Dio().get("https://jsonplaceholder.typicode.com/users");
+      final usersJson = response.data as List<dynamic>;
+      setState(() {
+        users = usersJson.map((json) => UserModel.fromJson(json)).toList();
+      });
     } catch (error) {
       print(error);
     }
@@ -59,13 +58,13 @@ class _HomeViewState extends State<HomeView> {
         child: ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          itemCount: _posts.length,
+          itemCount: users.length,
           itemBuilder: (context, index) {
-            final post = _posts[index];
+            final user = users[index];
             return PostWidget(
-              id: int.parse(post.id.toString()),
-              title: post.title.toString(),
-              description: post.body.toString(),
+              id: int.parse(user.id.toString()),
+              name: user.name.toString(),
+              userName: user.username.toString(),
             );
           },
         ),

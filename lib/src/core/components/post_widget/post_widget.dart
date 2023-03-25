@@ -3,13 +3,13 @@ import 'package:flutter/widgets.dart';
 
 class PostWidget extends StatelessWidget {
   final int id;
-  final String title;
-  final String description;
+  final String userName;
+  final String name;
   const PostWidget({
     super.key,
     required this.id,
-    required this.title,
-    required this.description,
+    required this.name,
+    required this.userName,
   });
 
   @override
@@ -24,7 +24,7 @@ class PostWidget extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(vertical: 10),
             child: Text(
-              title,
+              name,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
@@ -32,7 +32,7 @@ class PostWidget extends StatelessWidget {
               ),
             ),
           ),
-          Text(description),
+          Text(userName),
         ],
       ),
     );
