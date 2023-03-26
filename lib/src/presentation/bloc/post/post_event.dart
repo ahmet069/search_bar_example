@@ -1,3 +1,14 @@
-abstract class PostEvent {}
+part of 'post_bloc.dart';
 
-class GetAllPost extends PostEvent {}
+@immutable
+abstract class PostEvent extends Equatable {
+  const PostEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+@immutable
+class PostFetched extends PostEvent {
+  const PostFetched();
+}

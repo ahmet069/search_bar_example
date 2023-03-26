@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:search_bar_example/src/core/components/post_widget/post_widget.dart';
 import 'package:search_bar_example/src/data/model/user_model.dart';
 
 import '../../core/components/text_form_field/custom_text_form_field.dart';
@@ -56,11 +55,7 @@ class _SearchViewState extends State<SearchView> {
             itemCount: users.length,
             itemBuilder: (context, index) {
               final user = users[index];
-              return PostWidget(
-                id: int.parse(user.id.toString()),
-                name: user.name.toString(),
-                userName: user.username.toString(),
-              );
+              return Container();
             }),
       ),
     );
